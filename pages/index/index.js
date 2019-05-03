@@ -64,6 +64,9 @@ Page({
           },
           success: function (res) {
             //wx.setStorageSync("openid", res.data)//可以把openid保存起来,以便后期需求的使用
+            wx.redirectTo({
+              url: '../home/home'
+            });
           },
           fail: function (res) {
             console.log("login failed");

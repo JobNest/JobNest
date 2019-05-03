@@ -1,0 +1,5 @@
+<!--pages/home/home.wxml-->
+<form report-submit="true" bindsubmit="formSubmit">
+  <input type="text" placeholder="搜索岗位" placeholder-class="placeholder" name="query" />
+  <button class="button" form-type="submit">保存</button>
+</form>
