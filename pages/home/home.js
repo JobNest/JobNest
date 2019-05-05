@@ -7,16 +7,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    inputShowed: false,
+    inputVal: ""
   },
   formSubmit: function (e) {
     console.log('form发生了submit事件，携带数据为：', e.detail.value)
     wx.request({
       method: "POST",
       url: app.globalData.serverUrl + "/search",
-      data: e.detail.value,
+      data: {"query": e.detail.value},
       success: function (res) {
-
+        console.log(res);
       }}
       )
   },
@@ -75,5 +76,27 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  showInput: function () {
+    this.setData({
+      inputShowed: true
+    });
+  },
+  hideInput: function () {
+    this.setData({
+      inputVal: "",
+      inputShowed: false
+    });
+  },
+  clearInput: function () {
+    this.setData({
+      inputVal: ""
+    });
+  },
+  inputTyping: function (e) {
+    this.setData({
+      inputVal: e.detail.value
+    });
   }
 })
