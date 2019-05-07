@@ -51,15 +51,28 @@ Page({
       hasUserInfo: true
     })
   },
+
+  checkSession: function() {
+    wx.checkSession({
+      success() {
+        console.log('xxxx')
+      },
+      fail() {
+        login()
+      }
+    })
+  },
+
   login: function() {
     // 登录
     wx.login({
       success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId     // 请求后端登录
+        console.log(res.code)
         wx.request({
           method: "POST",
           url: app.globalData.serverUrl + "/login",
           data: {
+            code: res.code,
             userInfo: app.globalData.userInfo
           },
           success: function (res) {
