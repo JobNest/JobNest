@@ -4,7 +4,7 @@ const app = getApp()
 
 Page({
   data: {
-    motto: 'Hello World',
+    motto: '金三银四啊',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -42,7 +42,9 @@ Page({
         }
       })
     }
+    this.checkSession()
   },
+
   getUserInfo: function(e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
@@ -50,15 +52,26 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+    this.checkSession()
   },
 
   checkSession: function() {
+    var that = this
     wx.checkSession({
       success() {
-        console.log('xxxx')
+        var openid = wx.getStorageSync('openid')
+        if (openid == false) {
+          openid = getCurrentPages()[0].login()
+        }
+        if (openid != false) {
+          console.log(openid)
+          wx.redirectTo({
+            url: '../home/home'
+          });
+        }
       },
       fail() {
-        login()
+        that.login()
       }
     })
   },
@@ -76,13 +89,12 @@ Page({
             userInfo: app.globalData.userInfo
           },
           success: function (res) {
-            //wx.setStorageSync("openid", res.data)//可以把openid保存起来,以便后期需求的使用
-            wx.redirectTo({
-              url: '../home/home'
-            });
+            wx.setStorageSync("openid", res.data.openid)//可以把openid保存起来,以便后期需求的使用
+            return res.data.openid
           },
           fail: function (res) {
             console.log("login failed");
+            return false
           }
         })
       }

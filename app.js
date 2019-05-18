@@ -29,6 +29,7 @@ App({
   },
   globalData: {
     userInfo: null,
-    serverUrl: "http://127.0.0.1:5000"
+    //serverUrl: "http://127.0.0.1:5000",
+    serverUrl: "https://005ai.cn",
   }
 })
